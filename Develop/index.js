@@ -1,10 +1,11 @@
 // TODO: Include packages needed for this application
 const inquirer = require('inquirer')
-const generateMarkdown = require("./utils/generateMarkdown")
+const generateReadme = require("./utils/generateMarkdown.js")
 const fs = require("fs")
 
+
 // TODO: Create an array of questions for user input
-const promptReadme = () => {
+function promptReadme (){
     return inquirer.prompt([
         {
             type: 'input',
@@ -60,9 +61,9 @@ const promptReadme = () => {
         },
         {
             type: 'checkbox',
-            name: 'licenses',
+            name: 'license',
             message: 'What license would you like for this project?',
-            choices: ['Apache 2.0', 'GNU GPLv3', 'MIT', 'BSD 2-Clause "Simplified"', 'BSD 3-Clause "New"', 'Boost Software 1.0', 'Creative Commons Zero v1.0', 'Eclipse Public 2.0', 'GNU AGPLv3', 'GNU GPLv2', 'GNU LGPLv2.1', 'Mozzila Public 2.0', 'The Unilicense',]
+            choices: ['Apache_2.0', 'GNU_GPLv3', 'MIT', 'BSD_2-Clause "Simplified"', 'BSD_3-Clause "New"', 'Boost_Software_1.0', 'Creative_Commons_Zero_v1.0', 'Eclipse_Public_2.0', 'GNU_AGPLv3', 'GNU_GPLv2', 'GNU_LGPLv2.1', 'Mozzila_Public_2.0', 'The_Unilicense',]
         },
         {
             type: 'input',
@@ -84,15 +85,26 @@ const promptReadme = () => {
             name: 'qemail',
             message: 'Enter your email!',
         },
-    ]);
-};;
+    ])
+};
 
 // TODO: Create a function to write README file
-function writeToFile(fileName, data) {}
+
 
 // TODO: Create a function to initialize app
-function init() {}
+function init() {
+    promptReadme()
+        .then(answers => {
+            const fileContent = generateReadme(answers);
+            return fs.writeFile('./README.md', fileContent, err => {
+                if (err) {
+                    console.log(err)
+                }
+        })
+    })
+}
 
 // Function call to initialize app
-promptReadme();
+init() 
+
 
